@@ -3,6 +3,10 @@
 
   This is a code bundle for Portfolio. The original project is available at https://www.figma.com/design/TMSp4HKIm2sVMkw1n4d6ER/Portfolio.
 
+  Portfolio Github Link
+
+  https://gautamsdesign-oss.github.io/revitalize-portfolio/
+
   ## Running the code
 
   Run `npm i` to install the dependencies.
