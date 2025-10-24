@@ -1,56 +1,60 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from './store'; 
 import Portfolio from './components/Portfolio';
 import About from './components/About';
 import Work from './components/Work';
 import Contact from './components/Contact';
 import ProjectDetail from './components/ProjectDetail';
 import { getProjectById } from './data/projects';
+import { NavigationMenu, ThemeToggle } from './components/ui/navigation-menu';
+
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
+  const themeMode = useSelector((state: RootState) => state.theme.mode);
+
+    useEffect(() => {
+  document.body.classList.toggle("dark", themeMode === "dark");
+}, [themeMode]);
 
   const handleNavigate = (page: string, projectId?: string) => {
     setCurrentPage(page);
-    if (projectId) {
-      setCurrentProjectId(projectId);
-    } else {
-      setCurrentProjectId(null);
-    }
-    
-    // Scroll to top when navigating to home page or any page navigation
+    if (projectId) setCurrentProjectId(projectId);
+    else setCurrentProjectId(null);
     if (page === 'home') {
-      // Use a small delay to ensure the component has rendered
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 100);
+      setTimeout(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, 100);
     } else {
       // For other pages, scroll to top immediately
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
+  let pageContent;
   if (currentPage === 'about') {
-    return <About onNavigate={handleNavigate} />;
-  }
-
-  if (currentPage === 'work') {
-    return <Work onNavigate={handleNavigate} />;
-  }
-
-  if (currentPage === 'contact') {
-    return <Contact onNavigate={handleNavigate} />;
-  }
-
-  if (currentPage === 'project' && currentProjectId) {
+    pageContent = <About onNavigate={handleNavigate} />;
+  } else if (currentPage === 'work') {
+    pageContent = <Work onNavigate={handleNavigate} />;
+  } else if (currentPage === 'contact') {
+    pageContent = <Contact onNavigate={handleNavigate} />;
+  } else if (currentPage === 'project' && currentProjectId) {
     const project = getProjectById(currentProjectId);
     if (project) {
-      return <ProjectDetail project={project} onNavigate={handleNavigate} />;
+      pageContent = <ProjectDetail project={project} onNavigate={handleNavigate} />;
+    } else {
+      pageContent = <Work onNavigate={handleNavigate} />;
     }
-    // If project not found, redirect to work page
-    setCurrentPage('work');
-    return <Work onNavigate={handleNavigate} />;
+  } else {
+    pageContent = <Portfolio onNavigate={handleNavigate} />;
   }
 
-  return <Portfolio onNavigate={handleNavigate} />;
+return (
+  <>
+    <ThemeToggle />
+    <NavigationMenu />
+    {pageContent}
+  </>
+);
+
 }

@@ -3,6 +3,9 @@ import svgPaths from "../imports/svg-u2kbl5jn9r";
 import imgBlack1 from "figma:asset/d64ee2a4591ab68413984ab0f9e4bdec2d6e4946.png";
 import imgWhite1 from "figma:asset/68d6c98d0221ade2803b08fc1d7f23ad71e5d7ba.png";
 import { Project } from '../data/projects';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store';
+import { likeProject, addComment } from '../features/projectDetail/projectdetailsSlice';
 
 interface ProjectDetailProps {
   project: Project;
@@ -105,6 +108,23 @@ export default function ProjectDetail({ project, onNavigate }: ProjectDetailProp
       onNavigate('project', project.prevProject);
     }
   };
+
+const likes = useSelector((state: RootState) => state.projectDetail.likes[project.id] || 0);
+const comments = useSelector((state: RootState) => state.projectDetail.comments[project.id] || []);
+const dispatch = useDispatch();
+
+const handleLike = () => dispatch(likeProject(project.id));
+const handleAddComment = (e: React.FormEvent) => {
+  e.preventDefault();
+  // @ts-ignore
+  const comment = e.currentTarget.comment.value;
+  if (comment) {
+    dispatch(addComment({ id: project.id, comment }));
+    // @ts-ignore
+    e.currentTarget.reset();
+  }
+};
+ 
 
   return (
     <div className="bg-[#fafaff] min-h-screen">
@@ -212,6 +232,72 @@ export default function ProjectDetail({ project, onNavigate }: ProjectDetailProp
                     <p className="font-[Satoshi_Variable]">{project.solution}</p>
                   </div>
                 </div>
+                <div className="space-y-5 mb-6">
+
+              <div className="flex flex-row items-center gap-4 mb-4 w-full">
+              {/* Like button - left */}
+             <button
+                onClick={handleLike}
+                className="flex items-center bg-white border border-[#0cf25d] text-black font-bold px-6 py-3 rounded-full hover:bg-[#0cf25d] hover:text-black transition min-w-[110px] shadow-sm justify-center"
+                style={{ lineHeight: "1.5" }}
+                title="Like this project"
+              >
+                <span className="flex flex-row items-center gap-2">
+                  <svg width="22" height="22" fill="#262626" viewBox="0 0 24 24">
+                    <path d="M2 20H6V9H2V20ZM22 11.5C22 10.12 20.88 9 19.5 9H14.87L15.7 4.94L15.72 4.7C15.72 4.22 15.54 3.77 15.23 3.44L14.54 2.75C14.15 2.36 13.57 2.22 13.11 2.41C12.65 2.61 12.36 3.05 12.4 3.54L12.72 7.11C12.81 8.11 11.99 9 11 9H7V20H19.5C20.88 20 22 18.88 22 17.5V13.5C22 12.67 21.46 12 20.7 11.83C21.49 11.7 22 11.18 22 11.5Z"/>
+                  </svg>
+                  <span className="font-black text-lg">Like</span>
+                  <span className="font-extrabold text-[#262626] text-lg">{likes}</span>
+                </span>
+              </button>
+
+              {/* Comment form - right */}
+              <form
+                onSubmit={handleAddComment}
+                className="flex flex-row gap-2 flex-1"
+              >
+                <input
+                  name="comment"
+                  className="flex-1 rounded-full border border-gray-200 px-4 py-3 bg-white text-sm shadow-sm focus:outline-none focus:border-[#0cf25d] transition"
+                  placeholder="Add a comment…"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="flex items-center gap-1 px-5 py-3 bg-[#0cf25d] text-black font-bold rounded-full hover:bg-[#26fc75] transition"
+                >
+                  <svg width="20" height="20" fill="none" stroke="black" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M7 8h10M7 12h6"/><rect x="3" y="3" width="18" height="18" rx="3"/>
+                  </svg>
+                  Post
+                </button>
+              </form>
+            </div>
+
+              {/* Modern Comment List */}
+              <div className="space-y-4 mt-2">
+                {comments.length > 0 && (
+                  <div className="font-semibold text-xs text-gray-400 mb-1">Comments</div>
+                )}
+                <ul className="space-y-3">
+                  {comments.map((c, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      {/* Avatar */}
+                      <div className="flex-none rounded-full bg-[#eafcf2] text-[#0cf25d] w-8 h-8 flex items-center justify-center font-bold text-lg select-none">
+                        {`U`}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-sm text-black">User</span>
+                          <span className="text-xs text-gray-400">just now</span>
+                        </div>
+                        <div className="text-sm text-[var(--foreground)]">{c}</div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
 
                 {/* Customizable Button */}
                 <div className="pt-4">
