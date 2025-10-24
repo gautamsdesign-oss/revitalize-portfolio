@@ -1,9 +1,31 @@
 import * as React from "react";
-import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu@1.2.5";
-import { cva } from "class-variance-authority@0.7.1";
-import { ChevronDownIcon } from "lucide-react@0.487.0";
-
+import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
+import { cva } from "class-variance-authority";
+import { ChevronDownIcon } from "lucide-react";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../../store';
+import { toggleTheme } from '../../features/theme/themeSlice';
 import { cn } from "./utils";
+
+const ThemeToggle = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const themeMode = useSelector((state: RootState) => state.theme.mode);
+
+  const handleToggleTheme = () => {
+    dispatch(toggleTheme());
+  };
+
+  return (
+    <div>
+      <button
+         onClick={handleToggleTheme}
+         style={{ margin: '1rem', padding: '0.5rem 1rem' }}
+      >
+      Toggle Theme (Current: {themeMode})
+      </button>
+    </div>
+  );
+};
 
 function NavigationMenu({
   className,
@@ -25,6 +47,8 @@ function NavigationMenu({
     >
       {children}
       {viewport && <NavigationMenuViewport />}
+      {/* light */}
+      <ThemeToggle />
     </NavigationMenuPrimitive.Root>
   );
 }
@@ -157,6 +181,7 @@ function NavigationMenuIndicator({
 
 export {
   NavigationMenu,
+  ThemeToggle,
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuContent,
