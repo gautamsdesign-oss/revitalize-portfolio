@@ -142,6 +142,7 @@ function ProjectCard({
   image: string;
   projectId: string;
   onClick?: (projectId: string) => void;
+
 }) {
   return (
     <div className="flex flex-col gap-4 cursor-pointer group w-full" onClick={() => onClick?.(projectId)}>
@@ -225,7 +226,6 @@ export default function Portfolio({ onNavigate }: PortfolioProps) {
   };
 
   const handleResumeClick = () => {
-    // In a real portfolio, this would download or open the resume
     alert('Resume download would start here!');
   };
 
@@ -254,6 +254,32 @@ export default function Portfolio({ onNavigate }: PortfolioProps) {
       image: "https://avaprotocol.org/_next/image?url=%2Fimage%2Fteam%2Fsanyam.png&w=640&q=75"
     }
   ];
+
+  const blogData = [
+  {
+    id: 1,
+    image: "https://cdna.artstation.com/p/assets/images/images/093/686/634/large/gautam-sujith-img-5394-2.jpg?1763231935",
+    title: "Story Behind the Professional Shot", 
+    summary: "A crisp and clean portrait that captures confidence and professionalism. Here's how I achieved it...",
+    body: "The professional headshot was taken using an Apple Iphone 16 Pro, with a lens of 16mm focal length, providing a natural perspective and slight wide-angle view. The aperture was set to f/2.8, allowing for a balanced depth of field that keeps the subject sharp while softly blurring the background. The ISO was kept 160 to ensure minimal noise, and the shutter speed was set to 1/50s to capture a clear image in the well-lit indoor environment. Post-processing was done using Snapseed, where I made several adjustments to enhance the overall look of the photo. Brightness was increased by 10% to give the image a more vibrant feel, while contrast was decreased by 15% to soften the shadows and highlights. Shadows were lifted by 20% to reveal more detail in darker areas, and highlights were reduced by 10% to prevent overexposure. The curves tool was used to fine-tune the tonal range, slightly lifting the mid-tones for a more balanced exposure. Finally the image was then converted into Black and White to match the overall aesthetic.",
+  },
+  {
+    id: 2,
+    image: "https://cdnb.artstation.com/p/assets/images/images/093/686/243/large/gautam-sujith-img-4718-snapseedcopy.jpg?1763230978",
+    title: "An Untouched Moment - Aesthetic Shot",
+    summary: "An evocative black-and-white photo featuring a white horse gently grazing amidst natural foliage....",
+    body: "The shot was taken on an IPhone 15, using a 6mm focal length, providing a tighter field of view for the artistic composition. The wide f/1.6 aperture allows for a rich depth of field and seperation from the subject, foreground and the background, additionally a very fast shutter speed of 1/334s and low ISO of 32 ensures sharpness and miniaml noise in the well-lit outdoor setting. Post-processing was done using Snapseed, where the image was converted to black and white to enhance the timeless feel. Adjustments were made to brightness (+15%) and contrast (-30%) to create a balanced exposure, while shadows were increased (+25%) to reveal more detail in the darker areas. Highlights were decreased (-20%) to prevent overexposure in the lighter parts of the image. The curves tool was used to fine-tune the tonal range, slightly lifting the mid-tones and reducing the high tones for a softer look. Finally, a subtle vignette effect was applied to draw focus towards the center of the composition.",
+  },
+  {
+    id: 3,
+    image: "https://cdnb.artstation.com/p/assets/images/images/093/689/913/large/gautam-sujith-img-4810-snapseedcopy.jpg?1763242519",
+    title: "Creativity After Hours - Passion Shot",
+    summary: "Focused late-night work at a digital art workstation, reflecting dedication and creativity...",
+    body: "The shot was captured on an Apple Iphone 15, using a 6mm focal length, the image utilized an f/1.6 aperture for a shallow depth of field and better performance in low light environments. The ISO was set to 2000, allowing for decent exposure in the dimly lit workspace, while the shutter speed was set to 1/15s which preserved the ambient screen light and fine details. The photo was then taken into Snapseed for post-processing, where adjustments were made to enhance the shot; increasing brightness by 10%, and shadows by 20%, where as decreasing contrast by 40%, ambience by 20%, and highlights by 50% to achieve the desired aesthetic. Additionnally, tweaks to the curve was made to further refine the shot, reducing the high tones, and implementing a slight fade to give it a softer look.",
+  }
+];
+
+const [openBlog, setOpenBlog] = useState(null); 
 
   return (
     <div className="bg-[#fafaff] min-h-screen">
@@ -383,6 +409,78 @@ export default function Portfolio({ onNavigate }: PortfolioProps) {
         </div>
       </section>
 
+        {/* Blog Section */}
+        <section className="py-16 sm:py-20 lg:py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Section Header */}
+            <div className="max-w-2xl mb-4">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl text-black leading-relaxed font-[PP_Editorial_New] mt-[0px] mr-[0px] mb-[-18px] ml-[0px]">Blog</h2>
+              <p className="text-[#1c1c1c] text-xs sm:text-sm leading-relaxed mb-4 font-[Satoshi_Variable]">
+                Notes from my desk—curiosities, experiments, and the odd creative detour. Not just what I make, but how I think.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+              {blogData.map((post) => (
+                <div
+                  key={post.id}
+                  className="bg-white shadow rounded p-6 flex flex-col gap-2 min-h-[240px] cursor-pointer hover:shadow-lg transition"
+                  onClick={() => setOpenBlog(post)}
+                >
+                  <div className="h-40 w-full overflow-hidden rounded mb-2">
+                    <ImageWithFallback
+                      src={post.image}     
+                      alt={post.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="font-bold text-sm text-black">
+                    <h3>{post.title}</h3>
+                  </div>
+                  <div className="font-normal text-xs text-black">
+                    <p>{post.summary}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+          {/* Modal */}
+        {openBlog && (
+            <div
+              style={{
+                position: 'fixed',
+                inset: 0,
+                zIndex: 9999,
+                background: 'rgba(0,0,0,0.8)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onClick={() => setOpenBlog(null)}
+            >
+              <div
+                className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-y-auto relative mx-auto"
+                onClick={e => e.stopPropagation()}
+              >
+                <button
+                  className="absolute top-3 right-3 text-2xl font-bold text-gray-600 hover:text-black"
+                  onClick={() => setOpenBlog(null)}
+                  aria-label="Close"
+                >
+                  &times;
+                </button>
+                <div className="h-48 w-full overflow-hidden rounded-t-3xl">
+                  <img src={openBlog.image} alt={openBlog.title} className="w-[1280px] h-[720px] object-cover" />
+                </div>
+                <div className="p-12">
+                  <h2 className="text-xl font-bold mb-4">{openBlog.title}</h2>
+                  <p className="text-sm text-black whitespace-pre-line">{openBlog.body}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
       {/* Testimonials Section */}
       <section className="py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -397,7 +495,7 @@ export default function Portfolio({ onNavigate }: PortfolioProps) {
                 <p className="font-[Satoshi_Variable]">Here's how revitalization is experienced:</p>
               </div>
             </div>
-            
+
             {/* Testimonials Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
               <TestimonialCard
