@@ -5,9 +5,12 @@
   import App from "./App.tsx";
   import "./index.css";
 
-  createRoot(document.getElementById("root")!).render(
+import { HashRouter } from "react-router-dom";
+
+createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
-     <App />
+    <HashRouter>
+      <App />
+    </HashRouter>
   </Provider>
-  );
-  
+);

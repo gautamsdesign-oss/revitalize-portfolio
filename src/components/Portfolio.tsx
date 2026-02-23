@@ -255,27 +255,50 @@ export default function Portfolio({ onNavigate }: PortfolioProps) {
     }
   ];
 
-  const blogData = [
+  interface BlogPost {
+    id: number;
+    title: string;
+    summary: string;
+    body: string;
+    image?: string;
+    video?: string;
+  }
+
+  const blogData: BlogPost[] = [
   {
     id: 1,
     image: "https://cdna.artstation.com/p/assets/images/images/093/686/634/large/gautam-sujith-img-5394-2.jpg?1763231935",
     title: "Story Behind the Professional Shot", 
     summary: "A crisp and clean portrait that captures confidence and professionalism. Here's how I achieved it...",
-    body: "The professional headshot was taken using an Apple Iphone 16 Pro, with a lens of 16mm focal length, providing a natural perspective and slight wide-angle view. The aperture was set to f/2.8, allowing for a balanced depth of field that keeps the subject sharp while softly blurring the background. The ISO was kept 160 to ensure minimal noise, and the shutter speed was set to 1/50s to capture a clear image in the well-lit indoor environment. Post-processing was done using Snapseed, where I made several adjustments to enhance the overall look of the photo. Brightness was increased by 10% to give the image a more vibrant feel, while contrast was decreased by 15% to soften the shadows and highlights. Shadows were lifted by 20% to reveal more detail in darker areas, and highlights were reduced by 10% to prevent overexposure. The curves tool was used to fine-tune the tonal range, slightly lifting the mid-tones for a more balanced exposure. Finally the image was then converted into Black and White to match the overall aesthetic.",
+    body: "The professional headshot was taken using an Apple Iphone 16 Pro, with a lens of 16mm focal length, providing a natural perspective and slight wide-angle view. The aperture was set to f/2.8, allowing for a balanced depth of field that keeps the subject sharp while softly blurring the background. The ISO was kept 160 to ensure minimal noise, and the shutter speed was set to 1/50s to capture a clear image in the well-lit indoor environment. Post-processing was done using Snapseed, where I made several adjustments to enhance the overall look of the photo. Brightness was increased by 10% to give the image a more vibrant feel, while contrast was decreased by 15% to soften the shadows and highlights. Shadows were lifted by 20% to reveal more detail in darker areas, and highlights were reduced by 10% to prevent overexposure. The curves tool was used to fine-tune the tonal range, slightly lifting the mid-tones for a more balanced exposure. Finally the image was then converted into Black and White to match the overall aesthetic. This image symbolizes professionalism and approachability, presenting the subject in a clean and confident manner. The controlled setup emphasizes clarity and poise, making it ideal for career purposes and digital profiles.",
   },
   {
     id: 2,
     image: "https://cdnb.artstation.com/p/assets/images/images/093/686/243/large/gautam-sujith-img-4718-snapseedcopy.jpg?1763230978",
     title: "An Untouched Moment - Aesthetic Shot",
     summary: "An evocative black-and-white photo featuring a white horse gently grazing amidst natural foliage....",
-    body: "The shot was taken on an IPhone 15, using a 6mm focal length, providing a tighter field of view for the artistic composition. The wide f/1.6 aperture allows for a rich depth of field and seperation from the subject, foreground and the background, additionally a very fast shutter speed of 1/334s and low ISO of 32 ensures sharpness and miniaml noise in the well-lit outdoor setting. Post-processing was done using Snapseed, where the image was converted to black and white to enhance the timeless feel. Adjustments were made to brightness (+15%) and contrast (-30%) to create a balanced exposure, while shadows were increased (+25%) to reveal more detail in the darker areas. Highlights were decreased (-20%) to prevent overexposure in the lighter parts of the image. The curves tool was used to fine-tune the tonal range, slightly lifting the mid-tones and reducing the high tones for a softer look. Finally, a subtle vignette effect was applied to draw focus towards the center of the composition.",
+    body: "The shot was taken on an IPhone 15, using a 6mm focal length, providing a tighter field of view for the artistic composition. The wide f/1.6 aperture allows for a rich depth of field and seperation from the subject, foreground and the background, additionally a very fast shutter speed of 1/334s and low ISO of 32 ensures sharpness and miniaml noise in the well-lit outdoor setting. Post-processing was done using Snapseed, where the image was converted to black and white to enhance the timeless feel. Adjustments were made to brightness (+15%) and contrast (-30%) to create a balanced exposure, while shadows were increased (+25%) to reveal more detail in the darker areas. Highlights were decreased (-20%) to prevent overexposure in the lighter parts of the image. The curves tool was used to fine-tune the tonal range, slightly lifting the mid-tones and reducing the high tones for a softer look. Finally, a subtle vignette effect was applied to draw focus towards the center of the composition. This image captures tranquility and poetic beauty in nature, focusing on a white horse as the central subject. The composition and use of light evoke a sense of calm and introspection, inviting viewers to appreciate simple moments and visual storytelling.",
   },
   {
     id: 3,
     image: "https://cdnb.artstation.com/p/assets/images/images/093/689/913/large/gautam-sujith-img-4810-snapseedcopy.jpg?1763242519",
     title: "Creativity After Hours - Passion Shot",
     summary: "Focused late-night work at a digital art workstation, reflecting dedication and creativity...",
-    body: "The shot was captured on an Apple Iphone 15, using a 6mm focal length, the image utilized an f/1.6 aperture for a shallow depth of field and better performance in low light environments. The ISO was set to 2000, allowing for decent exposure in the dimly lit workspace, while the shutter speed was set to 1/15s which preserved the ambient screen light and fine details. The photo was then taken into Snapseed for post-processing, where adjustments were made to enhance the shot; increasing brightness by 10%, and shadows by 20%, where as decreasing contrast by 40%, ambience by 20%, and highlights by 50% to achieve the desired aesthetic. Additionnally, tweaks to the curve was made to further refine the shot, reducing the high tones, and implementing a slight fade to give it a softer look.",
+    body: "The shot was captured on an Apple Iphone 15, using a 6mm focal length, the image utilized an f/1.6 aperture for a shallow depth of field and better performance in low light environments. The ISO was set to 2000, allowing for decent exposure in the dimly lit workspace, while the shutter speed was set to 1/15s which preserved the ambient screen light and fine details. The photo was then taken into Snapseed for post-processing, where adjustments were made to enhance the shot; increasing brightness by 10%, and shadows by 20%, where as decreasing contrast by 40%, ambience by 20%, and highlights by 50% to achieve the desired aesthetic. Additionnally, tweaks to the curve was made to further refine the shot, reducing the high tones, and implementing a slight fade to give it a softer look. This image reflects dedication and creativity, showing the subject immersed in digital art and 3D modeling surrounded by glowing screens. It encapsulates the energy and focus of late-night artistic pursuits, representing a passion for technology and continuous learning.",
+  },
+  {
+    id: 4,
+    image: "https://cdna.artstation.com/p/assets/images/images/096/607/650/large/gautam-sujith-goal-no-6-clean-water-and-sanitation-page-0001.jpg?1771845498",
+    title: "Still Waters, Dark Shadows = Goal No. 6 - Clean Water and Sanitation",
+    summary: "A visual representation of the United Nations Sustainable Development Goal 6, focusing on clean water and sanitation...",
+    body: "An interactive light installation built around a two-tiered basin of water. The lower level holds orange acrylic fish shapes representing aquatic life, while the upper level features green industrial waste forms — together casting layered shadows of life and pollution onto a nearby wall. As viewers reach toward the projected scene, they discover that touching the fish means touching the debris too. When their full silhouette falls on the wall, their shadow merges with the green pollution — making them not a witness, but a part of it.",
+  },
+  {
+    id: 5,
+    video: "https://www.youtube.com/watch?v=xk09-iKGeG0",  
+    title: "Beyond the Lens - Videography Short film",
+    summary: "Its about the small things in life, stepping away from the chaos and from your daily routine and being able to reshape the atmosphere with ordinary moments.",
+    body: "The short film is based around a single break from all the chaos, the work you have around you. The first half of the film is shot on an iPhone 15, in cinematic mode 24fps and in 4k, in static and slow-slider shots at eye level, an overhead shot and multiple shots focusing on my workspace which includes tight b-rolls of my hands, objects and screen details. The second half of the film is shot on an iPhone 16 Pro for the after-glasses POV shots, which allows us to take advantage of the higher quality main camera to move closer to the action without losing details. The lighting is captured from natural soft light from the window which maintains the soft glow and avoids harsh contrasts, additionally, the exposure was set so highlights were controlled while the background falls slightly darker. As for the movement, it was limited to reducing tilts, and pushes; keeping every camera movement to be based on an action rather than calling attention to it. The soundtrack is calm, yet upbeat, intentionally keeping the track's sound low as the mood is dull and hectic, but as soon as the actor wears the glasses, the music is vibrant, lively and keeps you engaged, showing how the small moments throughout your life, taking a break can make it easy.",
   }
 ];
 
@@ -426,12 +449,25 @@ const [openBlog, setOpenBlog] = useState(null);
                   className="bg-white shadow rounded p-6 flex flex-col gap-2 min-h-[240px] cursor-pointer hover:shadow-lg transition"
                   onClick={() => setOpenBlog(post)}
                 >
-                  <div className="h-40 w-full overflow-hidden rounded mb-2">
-                    <ImageWithFallback
-                      src={post.image}     
-                      alt={post.title}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="h-52 w-full overflow-hidden rounded mb-2">
+                    {post.video ? (
+                      <div className="w-full h-full">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${new URL(post.video).searchParams.get("v")}`}
+                          title={post.title}
+                          className="w-full h-full"
+                          style={{ border: 0 }}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                        />
+                      </div>
+                    ) : (
+                      <ImageWithFallback
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
                   <div className="font-bold text-sm text-black">
                     <h3>{post.title}</h3>
@@ -471,8 +507,22 @@ const [openBlog, setOpenBlog] = useState(null);
                   &times;
                 </button>
                 <div className="h-48 w-full overflow-hidden rounded-t-3xl">
-                  <img src={openBlog.image} alt={openBlog.title} className="w-[1280px] h-[720px] object-cover" />
-                </div>
+                    {openBlog.video ? (
+                      <iframe
+                        src={`https://www.youtube.com/embed/${new URL(openBlog.video).searchParams.get("v")}`}
+                        title={openBlog.title}
+                        className="w-[1280px] h-[720px]"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <img
+                        src={openBlog.image}
+                        alt={openBlog.title}
+                        className="w-[1280px] h-[720px] object-cover"
+                      />
+                    )}
+                  </div>
                 <div className="p-12">
                   <h2 className="text-xl font-bold mb-4">{openBlog.title}</h2>
                   <p className="text-sm text-black whitespace-pre-line">{openBlog.body}</p>
