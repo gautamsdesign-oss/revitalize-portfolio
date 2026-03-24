@@ -262,6 +262,7 @@ export default function Portfolio({ onNavigate }: PortfolioProps) {
     body: string;
     image?: string;
     video?: string;
+    audioUrl?: string;
   }
 
   const blogData: BlogPost[] = [
@@ -299,7 +300,15 @@ export default function Portfolio({ onNavigate }: PortfolioProps) {
     title: "Beyond the Lens - Videography Short film",
     summary: "Its about the small things in life, stepping away from the chaos and from your daily routine and being able to reshape the atmosphere with ordinary moments.",
     body: "The short film is based around a single break from all the chaos, the work you have around you. The first half of the film is shot on an iPhone 15, in cinematic mode 24fps and in 4k, in static and slow-slider shots at eye level, an overhead shot and multiple shots focusing on my workspace which includes tight b-rolls of my hands, objects and screen details. The second half of the film is shot on an iPhone 16 Pro for the after-glasses POV shots, which allows us to take advantage of the higher quality main camera to move closer to the action without losing details. The lighting is captured from natural soft light from the window which maintains the soft glow and avoids harsh contrasts, additionally, the exposure was set so highlights were controlled while the background falls slightly darker. As for the movement, it was limited to reducing tilts, and pushes; keeping every camera movement to be based on an action rather than calling attention to it. The soundtrack is calm, yet upbeat, intentionally keeping the track's sound low as the mood is dull and hectic, but as soon as the actor wears the glasses, the music is vibrant, lively and keeps you engaged, showing how the small moments throughout your life, taking a break can make it easy.",
-  }
+  },
+  {
+    id: 6,
+    video: "https://www.youtube.com/watch?v=w9LgBieQI3M",  
+    title: "Sound Exploration - Audio Breakdown of Deck of Sounds",
+    summary: "Exploring Audacity, and use of professional sound equipment to create a soundscape that complements the visual storytelling of my work.",
+    body: "This entry is audio-first. In this recording, I walk through lighting, composition, and post-processing decisions behind the professional headshot.",
+  },
+
 ];
 
 const [openBlog, setOpenBlog] = useState(null); 
@@ -472,9 +481,15 @@ const [openBlog, setOpenBlog] = useState(null);
                   <div className="font-bold text-sm text-black">
                     <h3>{post.title}</h3>
                   </div>
-                  <div className="font-normal text-xs text-black">
-                    <p>{post.summary}</p>
-                  </div>
+                        <div className="font-normal text-xs text-black">
+                        <p>{post.summary}</p>
+                        {post.audioUrl && (
+                          <audio controls className="mt-2 w-full">
+                            <source src={post.audioUrl} type="audio/wav" />
+                            Your browser does not support the audio element.
+                          </audio>
+                        )}
+                      </div>
                 </div>
               ))}
             </div>
