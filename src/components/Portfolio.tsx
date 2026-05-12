@@ -213,6 +213,31 @@ interface PortfolioProps {
   onNavigate: (page: string, projectId?: string) => void;
 }
 
+function getYouTubeEmbedUrl(url: string) {
+  try {
+    const parsed = new URL(url);
+
+    if (parsed.hostname.includes("youtu.be")) {
+      const id = parsed.pathname.slice(1);
+      return `https://www.youtube.com/embed/${id}`;
+    }
+
+    if (parsed.pathname.startsWith("/shorts/")) {
+      const id = parsed.pathname.split("/shorts/")[1].split("?")[0];
+      return `https://www.youtube.com/embed/${id}`;
+    }
+
+    if (parsed.hostname.includes("youtube.com")) {
+      const id = parsed.searchParams.get("v");
+      if (id) return `https://www.youtube.com/embed/${id}`;
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 export default function Portfolio({ onNavigate }: PortfolioProps) {
   const [currentSection, setCurrentSection] = useState('home');
 
@@ -307,6 +332,27 @@ export default function Portfolio({ onNavigate }: PortfolioProps) {
     title: "Sound Exploration - Audio Breakdown of Deck of Sounds",
     summary: "Exploring Audacity, and use of professional sound equipment to create a soundscape that complements the visual storytelling of my work.",
     body: "This entry is audio-first. In this recording, I walk through lighting, composition, and post-processing decisions behind the professional headshot.",
+  },
+  {
+    id: 7,
+    image: "https://cdna.artstation.com/p/assets/images/images/097/541/288/large/gautam-sujith-frame-1.jpg?1774470909",
+    title: "Laser Cutting Experiment - Jail for your phone",
+    summary: "An experimental laser cutting project exploring the relationship between technology and personal device.",
+    body: "A laser-cut enclosure designed to hold a smartphone, exploring the intersection of technology and personal ownership. This is to explore how we interact with our mobile devices, and how they claim a huge part of our days; as a distraction.",
+  },
+  {
+    id: 8,
+    video: "https://www.youtube.com/watch?v=WQfzpuWdrJM",  
+    title: "Sound Exploration - Audio Breakdown of Deck of Sounds",
+    summary: "A short, honest reflection on how rule based art, sound, algorithmic music, and critical design have shaped my learning journey in this interactive media module.",
+    body: "A short reflection on my learning journey so far in this module, focusing on how simple rules, sound work, and algorithmic tools changed the way I think about interaction and systems. I touch on rule based games, interactive storyboarding with the UN goals, deep listening and sound editing in Audacity, and designing a critical laser cut phone stand that questions everyday phone use.",
+  },
+  {
+    id: 9,
+    video: "https://youtube.com/shorts/Ic2DGUpDftA?feature=share",  
+    title: "Cuboid — Interactive Climate Installation",
+    summary: "An interactive modular sculpture that makes the invisible consequences of environmental disruption tangible through real-time audio-visual feedback — driven by audience interaction with four interconnected physical objects.",
+    body: "Cuboid is a physical computing installation developed in response to UN Sustainable Development Goal 13 — Climate Action. The work comprises four laser-cut cuboids, each representing an environmental system — land, air, water, and energy — wired together into a shared electrical circuit using copper-tape contact points and resistor networks. As audience members handle, rearrange, or remove individual cuboids, the resistance of the network shifts, producing voltage fluctuations that an Arduino reads in real time. This signal is transmitted to TouchDesigner, where it drives a generative audio-visual environment: a feedback-loop-based visual system built from edge detection, displacement, and pixelation nodes that progressively degrades across four stages — from a calm, blue-green equilibrium to a fragmented, red-saturated collapse — while an audio oscillator simultaneously shifts in pitch and dissonance. The interaction mirrors the sensitivity of real ecological systems: small, seemingly isolated actions compound and cascade, making the feedback loop principle not just visible, but physically felt.",
   },
 
 ];
@@ -462,7 +508,7 @@ const [openBlog, setOpenBlog] = useState(null);
                     {post.video ? (
                       <div className="w-full h-full">
                         <iframe
-                          src={`https://www.youtube.com/embed/${new URL(post.video).searchParams.get("v")}`}
+                          src={getYouTubeEmbedUrl(post.video) || ""}
                           title={post.title}
                           className="w-full h-full"
                           style={{ border: 0 }}
